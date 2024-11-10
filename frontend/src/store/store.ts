@@ -1,3 +1,4 @@
+// src/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user/userSlice';
 import candidatesReducer from './features/candidates/candidatesSlice';
