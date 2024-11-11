@@ -1,4 +1,3 @@
-// src/services/voteService.ts
 import Candidate from "../models/candidate";
 import { emitVoteUpdate } from "../socket/socketManager";
 
@@ -11,7 +10,6 @@ export const voteForCandidate = async (candidateId: string) => {
   candidate.votes += 1;
   await candidate.save();
 
-  // המרת candidateId ל-string לפני שידור
   emitVoteUpdate({ candidateId: candidate._id.toString(), votes: candidate.votes });
 
   return candidate;

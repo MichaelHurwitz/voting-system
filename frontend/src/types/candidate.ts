@@ -1,7 +1,7 @@
 import { Status } from "./status";
 
 export interface Candidate {
-    id: string;
+    _id: string;
     name: string;
     image: string;
     votes: number;

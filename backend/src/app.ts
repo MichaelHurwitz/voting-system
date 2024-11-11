@@ -19,7 +19,7 @@ connectDB();
 
 // Routes
 app.use("/api", authRoutes);
-app.use("/api", candidateRoutes); // נתיבים מוגנים ע"י טוקן
+app.use("/api", candidateRoutes); 
 
 // Error handling middleware
 app.use(errorHandler);

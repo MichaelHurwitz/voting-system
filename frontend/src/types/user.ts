@@ -11,6 +11,7 @@ export interface User {
     token: string | null;
     status: Status;
     error: string | null;
+    isAdmin?: boolean;
   }
   
   

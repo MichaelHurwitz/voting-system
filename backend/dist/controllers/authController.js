@@ -30,6 +30,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.register = register;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(req.body);
         const { username, password } = req.body;
         const result = yield (0, authService_1.loginUser)(username, password);
         res.json(result);

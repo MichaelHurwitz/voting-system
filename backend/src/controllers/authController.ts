@@ -7,7 +7,6 @@ export const register = async (req: Request, res: Response) => {
     const user = await registerUser(username, password, isAdmin);
     res.status(201).json({ message: "User registered successfully", user });
   } catch (error) {
-    // טיפול בסוג השגיאה
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
@@ -18,11 +17,13 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   try {
+    console.log(req.body);
+
     const { username, password } = req.body;
+    
     const result = await loginUser(username, password);
     res.json(result);
   } catch (error) {
-    // טיפול בסוג השגיאה
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
     } else {
