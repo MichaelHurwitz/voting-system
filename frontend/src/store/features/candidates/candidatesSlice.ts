@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { CandidatesState } from '../../../types/candidate'; 
+import { CandidatesState, Candidate } from '../../../types/candidate';
 
 const initialState: CandidatesState = {
   candidates: [],
@@ -15,8 +15,10 @@ export const fetchCandidates = createAsyncThunk(
     try {
       const response = await axios.get('/api/candidates');
       return response.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
     }
   }
 );
@@ -24,21 +26,33 @@ export const fetchCandidates = createAsyncThunk(
 const candidatesSlice = createSlice({
   name: 'candidates',
   initialState,
-  reducers: {},
+  reducers: {
+    updateCandidates: (
+      state,
+      action: PayloadAction<{ candidateId: string; votes: number }>
+    ) => {
+      const { candidateId, votes } = action.payload;
+      const candidate = state.candidates.find((c) => c.id === candidateId);
+      if (candidate) {
+        candidate.votes = votes;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCandidates.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchCandidates.fulfilled, (state, action) => {
+      .addCase(fetchCandidates.fulfilled, (state, action: PayloadAction<Candidate[]>) => {
         state.status = 'succeeded';
         state.candidates = action.payload;
       })
       .addCase(fetchCandidates.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string;
+        state.error = action.error.message || "Failed to fetch candidates";
       });
   },
 });
 
+export const { updateCandidates } = candidatesSlice.actions;
 export default candidatesSlice.reducer;

@@ -1,4 +1,3 @@
-// src/hooks/useSecureFetch.ts
 import { useEffect, useState } from 'react';
 
 export const useSecureFetch = (url: string, options: RequestInit = {}) => {
