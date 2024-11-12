@@ -21,9 +21,9 @@ export const loginUser = createAsyncThunk(
         },
       });
       const data = response.data;
-      console.log("API Response - data:", data); // לוג לבדיקת התגובה מהשרת
+      console.log("API Response - data:", data); 
       localStorage.setItem('token', data.token);
-      localStorage.setItem('isAdmin', JSON.stringify(data.user.isAdmin)); // שים לב שאנחנו משתמשים ב-data.user.isAdmin
+      localStorage.setItem('isAdmin', JSON.stringify(data.user.isAdmin)); 
       return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -55,7 +55,7 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isAdmin = action.payload.user.isAdmin; // שמירת isAdmin בצורה ישירה
+        state.isAdmin = action.payload.user.isAdmin; 
         console.log("loginUser.fulfilled - user:", state.user);
         console.log("loginUser.fulfilled - token:", state.token);
         console.log("loginUser.fulfilled - isAdmin:", state.isAdmin);

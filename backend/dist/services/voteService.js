@@ -13,17 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.voteForCandidate = void 0;
-// src/services/voteService.ts
+const UserModel_1 = __importDefault(require("../models/UserModel"));
 const candidate_1 = __importDefault(require("../models/candidate"));
 const socketManager_1 = require("../socket/socketManager");
-const voteForCandidate = (candidateId) => __awaiter(void 0, void 0, void 0, function* () {
+const voteForCandidate = (userId, candidateId) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield UserModel_1.default.findById(userId);
+    if (!user) {
+        throw new Error("User not found");
+    }
+    if (user.hasVoted) {
+        throw new Error("You have already voted");
+    }
     const candidate = yield candidate_1.default.findById(candidateId);
     if (!candidate) {
         throw new Error("Candidate not found");
     }
     candidate.votes += 1;
     yield candidate.save();
-    // המרת candidateId ל-string לפני שידור
+    user.hasVoted = true;
+    user.votedFor = candidate._id;
+    yield user.save();
     (0, socketManager_1.emitVoteUpdate)({ candidateId: candidate._id.toString(), votes: candidate.votes });
     return candidate;
 });

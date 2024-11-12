@@ -19,7 +19,7 @@ app.use(express_1.default.json());
 (0, db_1.default)();
 // Routes
 app.use("/api", authRoutes_1.default);
-app.use("/api", candidateRoutes_1.default); // נתיבים מוגנים ע"י טוקן
+app.use("/api", candidateRoutes_1.default);
 // Error handling middleware
 app.use(errorHandler_1.errorHandler);
 // Initialize Socket.IO

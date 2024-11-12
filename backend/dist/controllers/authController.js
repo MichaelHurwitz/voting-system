@@ -18,7 +18,6 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(201).json({ message: "User registered successfully", user });
     }
     catch (error) {
-        // טיפול בסוג השגיאה
         if (error instanceof Error) {
             res.status(400).json({ message: error.message });
         }
@@ -36,7 +35,6 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(result);
     }
     catch (error) {
-        // טיפול בסוג השגיאה
         if (error instanceof Error) {
             res.status(400).json({ message: error.message });
         }

@@ -13,20 +13,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = exports.registerUser = void 0;
+// src/services/authService.ts
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const user_1 = __importDefault(require("../models/user"));
+const UserModel_1 = __importDefault(require("../models/UserModel"));
 const registerUser = (username, password, isAdmin) => __awaiter(void 0, void 0, void 0, function* () {
-    const existingUser = yield user_1.default.findOne({ username });
+    const existingUser = yield UserModel_1.default.findOne({ username });
     if (existingUser)
         throw new Error("Username already taken");
     const hashedPassword = yield bcrypt_1.default.hash(password, 10);
-    const newUser = new user_1.default({ username, password: hashedPassword, isAdmin });
+    const newUser = new UserModel_1.default({ username, password: hashedPassword, isAdmin });
     return yield newUser.save();
 });
 exports.registerUser = registerUser;
 const loginUser = (username, password) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_1.default.findOne({ username });
+    const user = yield UserModel_1.default.findOne({ username });
     if (!user)
         throw new Error("Invalid credentials");
     const isMatch = yield bcrypt_1.default.compare(password, user.password);

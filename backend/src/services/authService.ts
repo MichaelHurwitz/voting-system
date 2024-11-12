@@ -1,6 +1,7 @@
+// src/services/authService.ts
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-import User from "../models/user";
+import User from "../models/UserModel";
 
 export const registerUser = async (username: string, password: string, isAdmin: boolean) => {
   const existingUser = await User.findOne({ username });

@@ -13,8 +13,9 @@ exports.handleVote = void 0;
 const voteService_1 = require("../services/voteService");
 const handleVote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { candidateId } = req.body;
+    const userId = req.user._id.toString();
     try {
-        const candidate = yield (0, voteService_1.voteForCandidate)(candidateId);
+        const candidate = yield (0, voteService_1.voteForCandidate)(userId, candidateId);
         res.status(200).json({ message: "Vote recorded", candidate });
     }
     catch (error) {
